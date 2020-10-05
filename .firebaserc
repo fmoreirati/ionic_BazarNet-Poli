@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "bazarnet-e1e82": {
+      "hosting": {
+        "app": [
+          "bazarnet-e1e82"
+        ]
+      }
+    }
+  }
+}
