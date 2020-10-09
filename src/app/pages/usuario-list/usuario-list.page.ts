@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
+import { MessageService } from '../../services/message.service';
+
 
 @Component({
   selector: 'app-usuario-list',
@@ -9,10 +13,14 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class UsuarioListPage implements OnInit {
 
-public usuarios:Usuario[] = []
+  public usuarios: Usuario[] = []
 
   constructor(
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private alertController: AlertController,
+    private msg: MessageService
+   
   ) { }
 
   ngOnInit() {
@@ -22,5 +30,52 @@ public usuarios:Usuario[] = []
       }
     )
   }
+
+  // remover(id) {
+  //   this.usuarioService.remover(id).then(
+  //     () => {
+  //       this.router.navigate([""]);
+  //     },
+  //     err => {
+  //       console.log("Erro: ", err);
+  //     }
+  //   )
+  // }
+
+  async remover(id) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirmar!',
+      message: 'Deseja apagar os dados do usuário?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'OK',
+          handler: () => {
+            this.msg.presentLoading();
+            this.usuarioService.remover(id).then(
+              () => {
+                this.msg.dismissLoading()
+                this.router.navigate([""]);
+              },
+              err => {
+                this.msg.dismissLoading()
+                console.log("Erro: ", err);
+              }
+            )
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+ 
 
 }
