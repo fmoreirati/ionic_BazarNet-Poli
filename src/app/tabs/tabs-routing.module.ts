@@ -12,8 +12,8 @@ const routes: Routes = [
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'usuarioList',
+        loadChildren: () => import('../pages/usuario-list/usuario-list.module').then(m => m.UsuarioListPageModule)
       },
       {
         path: 'tab3',
@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'usuarioForm',
         loadChildren: () => import('../pages/usuario-form/usuario-form.module').then( m => m.UsuarioFormPageModule)
+      },
+      {
+        path: 'usuarioPerfil/:id',
+        loadChildren: () => import('../pages/usuario-pefil/usuario-pefil.module').then( m => m.UsuarioPefilPageModule)
       },
       {
         path: '',
