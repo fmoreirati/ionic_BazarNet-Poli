@@ -11,7 +11,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class UsuarioPefilPage implements OnInit {
 
 public id:string = null;
-public usuario: Usuario;
+public usuario: Usuario = new Usuario;
+public nome:string = "Usuário";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,6 +26,7 @@ public usuario: Usuario;
         res => {
           //this.usuario = new Usuario;
           this.usuario = res
+          this.nome = res.nome;
         }
       )
     }
