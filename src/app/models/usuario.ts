@@ -1,10 +1,8 @@
 export class Usuario {
-    //id:string;
+    id:string;
     nome: string;
     email: string;
     tel:string;
     senha:string;
     ativo:boolean = true;
-    lat:number;
-    lng:number;
 }
