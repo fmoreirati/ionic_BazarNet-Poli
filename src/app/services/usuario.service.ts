@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators'
 
@@ -12,19 +13,31 @@ export class UsuarioService {
   private colletionUser: string = "usuarios";
 
   constructor(
-    private fireDB: AngularFirestore
+    private fireDB: AngularFirestore,
+    public auth: AngularFireAuth
   ) { }
 
   add(usuario: Usuario) {
-    return this.fireDB.collection(this.colletionUser).add(
-      {
-        nome: usuario.nome,
-        email: usuario.email,
-        tel: usuario.tel,
-        ativo: usuario.ativo,
-        senha: usuario.senha
+    return this.auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).then(
+      res => {
+        //return this.fireDB.collection(this.colletionUser).add(
+        return this.fireDB.collection(this.colletionUser).doc(res.user.uid).set(
+          {
+            nome: usuario.nome,
+            email: usuario.email,
+            tel: usuario.tel,
+            ativo: usuario.ativo,
+            //senha: usuario.senha
+          }
+        ).catch(
+          () => {
+            this.auth.user.subscribe(
+              res => res.delete()
+            )
+          }
+        );
       }
-    );
+    )
   }
 
   getAll() {
@@ -36,17 +49,17 @@ export class UsuarioService {
       )
   }
 
-  get(id:string){
+  get(id: string) {
     return this.fireDB.collection(this.colletionUser).doc<Usuario>(id).valueChanges();
   }
 
-  update(usuario:Usuario, id:string){
+  update(usuario: Usuario, id: string) {
     usuario.lat = usuario.lng++;
     usuario.lng = usuario.lat++
     return this.fireDB.collection(this.colletionUser).doc(id).update(usuario);
   }
 
-  remover(id:string){
+  remover(id: string) {
     return this.fireDB.collection(this.colletionUser).doc(id).delete();
   }
 

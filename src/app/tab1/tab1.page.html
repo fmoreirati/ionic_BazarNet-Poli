@@ -1,13 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Inicio <!-- Tab1 -->
+    <ion-title slot="start">
+      Inicio
+    </ion-title>
+    <ion-title slot="end">
+      <ion-icon name="person" routerLink="/login" *ngIf="!user"></ion-icon>
+      <ion-text routerLink="/tabs/usuarioPerfil" *ngIf="user">{{user.nome}}</ion-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" routerLink="/tabs/usuarioForm">
       <ion-icon name="add"></ion-icon>

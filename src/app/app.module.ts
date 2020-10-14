@@ -12,7 +12,8 @@ import { AppComponent } from './app.component';
 // Firebase ---------------
 import { AngularFireModule } from '@angular/fire'
 import { environment } from 'src/environments/environment';
-import {AngularFirestoreModule} from '@angular/fire/firestore'
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AngularFirestoreModule} from '@angular/fire/firestore'
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
   providers: [
     StatusBar,
