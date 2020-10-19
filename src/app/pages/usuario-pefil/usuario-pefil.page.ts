@@ -3,13 +3,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { MessageService } from 'src/app/services/message.service';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-usuario-pefil',
   templateUrl: './usuario-pefil.page.html',
   styleUrls: ['./usuario-pefil.page.scss'],
 })
+
 export class UsuarioPefilPage implements OnInit {
+
+  slideOpts = {
+    slidesPerView: 3,
+    slidesPerColumn: 1,
+    slidesPerGroup: 3,
+    watchSlidesProgress: true,
+  }
 
   public id: string = null;
   public usuario: Usuario = new Usuario;
@@ -20,7 +30,9 @@ export class UsuarioPefilPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
     private router: Router,
-    private camera: Camera
+    private camera: Camera,
+    public msg: MessageService,
+    public actionSheetController:ActionSheetController
   ) { }
 
   ngOnInit() {
@@ -59,7 +71,7 @@ export class UsuarioPefilPage implements OnInit {
   }
 
 
-  alterarFoto() {
+  tirarFoto() {
     const options: CameraOptions = {
       quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -73,12 +85,75 @@ export class UsuarioPefilPage implements OnInit {
         // If it's base64 (DATA_URL):
         this.preview = 'data:image/jpeg;base64,' + imageData;
         this.usuario.foto = this.preview;
-        console.log(this.usuario.foto);
+        //console.log(this.usuario.foto);
+        this.msg.presentLoading();
+        this.usuarioService.updatePhoto(this.id, this.usuario.foto).then(
+          () => {
+            this.msg.dismissLoading()
+          }
+        )
       }, (err) => {
         // Handle error
         console.log("Camera issue: " + err);
-      });
+      }
+    );
   }
 
+  escolherFoto(){
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+
+    this.camera.getPicture(options).then(
+      (imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        this.preview = 'data:image/jpeg;base64,' + imageData;
+        this.usuario.foto = this.preview;
+        //console.log(this.usuario.foto);
+        this.msg.presentLoading();
+        this.usuarioService.updatePhoto(this.id, this.usuario.foto).then(
+          () => {
+            this.msg.dismissLoading()
+          }
+        )
+      }, (err) => {
+        // Handle error
+        console.log("Camera issue: " + err);
+      }
+    );
+  }
+
+  async alterarFoto() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Onde esta a foto?',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Camera',
+        icon: 'camera',
+        handler: () => {
+         this.tirarFoto()
+        }
+      }, {
+        text: 'Galeria',
+        icon: 'image',
+        handler: () => {
+          this.escolherFoto()
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
 }

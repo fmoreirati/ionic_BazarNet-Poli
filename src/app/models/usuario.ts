@@ -5,6 +5,7 @@ export class Usuario {
     tel:string;
     senha:string;
     foto:string;
+    galeria:string[]=[];
     ativo:boolean = true;
 
     lat:number;

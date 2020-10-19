@@ -9,6 +9,7 @@
     <ion-tab-button tab="usuarioList">
       <ion-icon name="people-outline"></ion-icon>
       <ion-label>Usuarios</ion-label>
+      <ion-badge color="danger" *ngIf="quantUsers > 0">{{quantUsers}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="tab3">
