@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156191647255",
+    "firebase_url": "https://bazarnet-e1e82.firebaseio.com",
+    "project_id": "bazarnet-e1e82",
+    "storage_bucket": "bazarnet-e1e82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156191647255:android:318abb65f2e50c45301e52",
+        "android_client_info": {
+          "package_name": "br.com.fmti.bazarNet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156191647255-n3lle7i3pnc09bgl4qegdqvtjlvli96t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPj-7ox69dr9f0heZi-j2MNs77Pqf0CJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156191647255-n3lle7i3pnc09bgl4qegdqvtjlvli96t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
