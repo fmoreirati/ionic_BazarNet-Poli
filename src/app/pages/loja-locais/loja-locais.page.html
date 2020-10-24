@@ -1,13 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Localização das Lojas
+    <ion-title slot="start">
+      Locais das Lojas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  
-<div id='map_canvas'></div>
+
+  <agm-map [latitude]='lat' [longitude]='lng' [mapTypeId]='mapType'>
+  </agm-map>
 
 </ion-content>

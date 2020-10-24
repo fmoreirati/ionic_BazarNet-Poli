@@ -8,16 +8,16 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'lojasLocais',
+        loadChildren: () => import('../pages/loja-locais/loja-locais.module').then(m => m.LojaLocaisPageModule)
+      },
+      {
         path: 'tab1',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },
       {
         path: 'usuarioList',
         loadChildren: () => import('../pages/usuario-list/usuario-list.module').then(m => m.UsuarioListPageModule)
-      },
-      {
-        path: 'lojasLocais',
-        loadChildren: () => import('../pages/lojas-locais/lojas-locais-routing.module').then(m => m.LojasLocaisPageRoutingModule)
       },
       {
         path: 'usuarioForm',

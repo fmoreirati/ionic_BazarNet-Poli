@@ -19,8 +19,12 @@ ou
 * npm install cordova-plugin-android-permissions
 * npm install @ionic-native/android-permissions
 
-### Google maps (https://github.com/ionic-team/ionic-native-google-maps)
+### Google maps (https://github.com/ionic-team/ionic-native-google-maps) - Inconpativel com Capacitor
 * npm install @ionic-native/core@beta @ionic-native/google-maps@beta
 * ionic cordova plugin add https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps (cordova)
 * npm i https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps (capacitor)
 
+## AGM
+ - npm install @types/googlemaps@3.39.13 --save
+ - npm install @agm/core --save
+ - npm install @angular/google-maps --save

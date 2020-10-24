@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
+
 // Firebase ---------------
 import { AngularFireModule } from '@angular/fire'
 import { environment } from 'src/environments/environment';
@@ -32,7 +33,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     AndroidPermissions,
-
   ],
   bootstrap: [AppComponent]
 })

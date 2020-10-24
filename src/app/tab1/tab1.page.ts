@@ -11,6 +11,10 @@ export class Tab1Page implements OnInit {
 
   public user: any;
 
+  lat: 50;
+  lng: 40;
+  mapType = 'satellite';
+
   constructor(
     public usuarioService: UsuarioService
   ) { }
