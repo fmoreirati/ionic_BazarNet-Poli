@@ -12,6 +12,11 @@ const routes: Routes = [
         loadChildren: () => import('../pages/loja-locais/loja-locais.module').then(m => m.LojaLocaisPageModule)
       },
       {
+        path: 'lojaForm',
+        loadChildren: () => import('../pages/loja-form/loja-form.module').then( m => m.LojaFormPageModule)
+      },
+    
+      {
         path: 'tab1',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
       },

@@ -11,7 +11,8 @@ import { AppComponent } from './app.component';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { HttpClient, HttpClientModule } from '@angular/common/http'
 
 // Firebase ---------------
 import { AngularFireModule } from '@angular/fire'
@@ -26,6 +27,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
@@ -33,6 +35,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Camera,
     AndroidPermissions,
+    Geolocation,
   ],
   bootstrap: [AppComponent]
 })
