@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators'
 import { Loja } from '../models/loja';
 import { HttpClient } from '@angular/common/http';
 import { Endereco } from '../models/endereco';
+import { EnderecoService } from './endereco.service';
 
 
 @Injectable({
@@ -15,32 +16,32 @@ export class LojaService {
 
   constructor(
     private fireDB: AngularFirestore,
+    private enderecoService: EnderecoService,
     private http: HttpClient
   ) { }
 
   add(loja: Loja) {
-    return this.fireDB.collection(this.colletion).add(
-      {
-        nome: loja.nome,
-        endereco: {
-          cep:loja.endereco.cep,
-          logradouro: loja.endereco.logradouro,
-          bairro: loja.endereco.bairro,
-          localidade: loja.endereco.localidade,
-          uf: loja.endereco.uf
-        },
-        complemento: loja.complemento,
-        numero: loja.numero,
-        tel: loja.tel,
-        ativo: loja.ativo,
+    return this.enderecoService.add(loja.endereco).then(
+      res => {
+        return this.fireDB.collection(this.colletion).add(
+          {
+            nome: loja.nome,
+            endereco:res.id,
+            complemento: loja.complemento,
+            numero: loja.numero,
+            tel: loja.tel,
+            ativo: loja.ativo,
 
-        lat: loja.lat,
-        lng: loja.lng
+            lat: loja.lat,
+            lng: loja.lng
+          }
+        )
       }
     )
+
   }
 
-  getAll() {
+  getAll() { 
     return this.fireDB.collection<Loja>(this.colletion).snapshotChanges()
       .pipe(
         map(
@@ -61,7 +62,5 @@ export class LojaService {
     return this.fireDB.collection(this.colletion).doc(id).delete();
   }
 
-  getEndereco(cep: string) {
-    return this.http.get<Endereco>("https://viacep.com.br/ws/" + cep + "/json/");
-  }
+
 }

@@ -23,7 +23,7 @@
           <ion-icon slot="" name="add"></ion-icon>
         </ion-button>
       </ion-label>
-      <ion-input type="number" name="cep" [(ngModel)]="cep" required maxlength='8'></ion-input>
+      <ion-input type="number" name="cep" [(ngModel)]="cep" required maxlength='8' (ngModelChange)="buscaCEP()"></ion-input>
     </ion-item>
 
     <ion-item>

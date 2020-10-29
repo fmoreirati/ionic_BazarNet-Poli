@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Loja } from 'src/app/models/loja';
+import { LojaService } from 'src/app/services/loja.service';
 
 @Component({
   selector: 'app-loja-locais',
@@ -8,6 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 })
 export class LojaLocaisPage implements OnInit {
 
+  //Maps
   public lat: number = -22.500;
   public lng: number = -46.500;
   public mapType = 'satellite';
@@ -16,13 +19,23 @@ export class LojaLocaisPage implements OnInit {
   public clickable:boolean = true; 
   public radius = 300;
   public draggable = true;
+  public location: Location;
+
+  //Lojas
+  public lojas:Loja[]=[];
 
   constructor(
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private lojaService:LojaService,
   ) { }
 
   ngOnInit() {
     this.getLocal();
+    this.lojaService.getAll().subscribe(
+      res=>{
+        this.lojas = res
+      }
+    )
   }
 
   getLocal() {
@@ -37,4 +50,8 @@ export class LojaLocaisPage implements OnInit {
     );
   }
 
+  onClick(event){
+    console.log(event);
+    
+  }
 }

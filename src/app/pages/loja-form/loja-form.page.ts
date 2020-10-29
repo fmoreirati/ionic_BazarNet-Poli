@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Loja } from 'src/app/models/loja';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MessageService } from 'src/app/services/message.service';
 import { LojaService } from 'src/app/services/loja.service';
 import { Router } from '@angular/router';
+import { EnderecoService } from 'src/app/services/endereco.service';
 
 @Component({
   selector: 'app-loja-form',
@@ -22,13 +23,15 @@ export class LojaFormPage implements OnInit {
     private geolocation: Geolocation,
     private msg: MessageService,
     private lojaService: LojaService,
+    private enderecoService: EnderecoService,
     private router: Router
   ) { }
+
+ 
 
   ngOnInit() {
     this.getLocal();
   }
-
 
   onSubmit(form) {
     this.loja.lat = this.lat;
@@ -88,7 +91,7 @@ export class LojaFormPage implements OnInit {
   }
 
   getCEP() {
-    this.lojaService.getEndereco(this.cep).subscribe(
+    this.enderecoService.getEndereco(this.cep).subscribe(
       res => {
         console.log(res);
 
@@ -107,4 +110,14 @@ export class LojaFormPage implements OnInit {
       }
     )
   }
+  
+  buscaCEP(){
+    this.enderecoService.buscaCEP(this.cep).subscribe(
+      res=>{
+        this.loja.endereco = res[0]
+        console.log(res);
+      }
+    )  
+  }
+
 }
