@@ -17,27 +17,23 @@
 
   <agm-map [latitude]="lat" [longitude]="lng" [mapTypeId]="mapType" [zoom]="zoom" (mapClick)="onClick($event)">
 
-    <agm-circle [latitude]="lat" [longitude]="lng" [clickable]="clickable" [radius]="radius" [draggable]="draggable">
-    </agm-circle>
-
-    <agm-marker [latitude]="lat" [longitude]="lng" [title]="title"></agm-marker>
+    <agm-marker [latitude]="loja.lat" [longitude]="loja.lng" [markerDraggable]="true"> </agm-marker>
 
   </agm-map>
+
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let loja of lojas">
+      <ion-col size="6" *ngFor="let loja of lojas; let i = index" (click)="escolherLoja(i)">
         <ion-card>
           <ion-card-header>
             <ion-card-title>{{loja.nome}}</ion-card-title>
           </ion-card-header>
-
           <ion-card-content>
             {{loja.endereco}}
           </ion-card-content>
         </ion-card>
-
-
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>

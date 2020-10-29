@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MouseEvent } from '@agm/core';
+
 import { Loja } from 'src/app/models/loja';
 import { LojaService } from 'src/app/services/loja.service';
 
@@ -16,33 +18,31 @@ export class LojaLocaisPage implements OnInit {
   public mapType = 'satellite';
   public zoom: number = 15;
   public title: string = "Minha localização";
-  public clickable:boolean = true; 
+  public clickable: boolean = true;
   public radius = 300;
   public draggable = true;
-  public location: Location;
 
   //Lojas
-  public lojas:Loja[]=[];
+  public loja: Loja = new Loja;
+  public lojas: Loja[] = [];
 
   constructor(
     private geolocation: Geolocation,
-    private lojaService:LojaService,
+    private lojaService: LojaService,
   ) { }
 
   ngOnInit() {
     this.getLocal();
-    this.lojaService.getAll().subscribe(
-      res=>{
-        this.lojas = res
-      }
-    )
+    this.loadLojas();
   }
 
   getLocal() {
     this.geolocation.getCurrentPosition().then(
       (resp) => {
-        this.lat = resp.coords.latitude
-        this.lng = resp.coords.longitude
+        this.lat = resp.coords.latitude;
+        this.lng = resp.coords.longitude;
+        this.loja.lat = this.lat;
+        this.loja.lng = this.lng;
       }
     ).catch((error) => {
       console.log('Error getting location', error);
@@ -50,8 +50,25 @@ export class LojaLocaisPage implements OnInit {
     );
   }
 
-  onClick(event){
-    console.log(event);
-    
+  onClick($event: MouseEvent) {
+    console.log($event);
+    this.loja.lat = $event.coords.lat;
+    this.loja.lng = $event.coords.lng;
+
   }
+
+  loadLojas() {
+    this.lojaService.getAll().subscribe(
+      res => {
+        this.lojas = res
+      }
+    )
+  }
+
+  escolherLoja(index) {
+    this.loja = this.lojas[index];
+    this.lat = this.loja.lat;
+    this.lng = this.loja.lng;
+  }
+
 }
