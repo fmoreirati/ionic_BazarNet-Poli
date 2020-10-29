@@ -21,7 +21,7 @@ export class LojaLocaisPage implements OnInit {
   public clickable: boolean = true;
   public radius = 300;
   public draggable = true;
-
+  public legendaMark
   //Lojas
   public loja: Loja = new Loja;
   public lojas: Loja[] = [];
@@ -50,11 +50,11 @@ export class LojaLocaisPage implements OnInit {
     );
   }
 
-  onClick($event: MouseEvent) {
+  onClick($event: MouseEvent, infoWindow) {
     console.log($event);
     this.loja.lat = $event.coords.lat;
     this.loja.lng = $event.coords.lng;
-
+    infoWindow.close();     
   }
 
   loadLojas() {

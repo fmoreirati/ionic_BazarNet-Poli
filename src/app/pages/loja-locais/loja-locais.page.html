@@ -8,19 +8,24 @@
 
 <ion-content [fullscreen]="true">
 
-
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" routerLink="/tabs/lojaForm">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
-  <agm-map [latitude]="lat" [longitude]="lng" [mapTypeId]="mapType" [zoom]="zoom" (mapClick)="onClick($event)">
+  <!-- AGM -->
+  <agm-map [latitude]="lat" [longitude]="lng" [mapTypeId]="mapType" [zoom]="zoom" (mapClick)="onClick($event, infoWindow)">
 
-    <agm-marker [latitude]="loja.lat" [longitude]="loja.lng" [markerDraggable]="true"> </agm-marker>
+    <agm-marker [latitude]="loja.lat" [longitude]="loja.lng" [markerDraggable]="true">
+      <agm-info-window #infoWindow>
+        <strong>{{loja.nome}} </strong>
+      </agm-info-window>
+    </agm-marker>
 
   </agm-map>
 
+  <!-- Lojas -->
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let loja of lojas; let i = index" (click)="escolherLoja(i)">
