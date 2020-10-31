@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Perfil da Loja
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-item lines="none">
+    <img [src]="preview" (click)="alterarFoto()" *ngIf="preview">
+    <img src="assets/box.jpg" (click)="alterarFoto()" *ngIf="!preview">
+
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide *ngFor="let foto of loja.galeria; let i=index">
+        <img src="{{foto}}" alt="" (click)="opcaoFoto(i)">
+      </ion-slide>
+    </ion-slides>
+
+  </ion-item>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Nome</ion-label>
+      <ion-text>{{loja.nome}}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefone</ion-label>
+      <ion-text>{{loja.tel}}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Endereco</ion-label>
+      <ion-text>{{loja.endereco}}</ion-text>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

@@ -15,7 +15,10 @@ const routes: Routes = [
         path: 'lojaForm',
         loadChildren: () => import('../pages/loja-form/loja-form.module').then( m => m.LojaFormPageModule)
       },
-    
+      {
+        path: 'lojaPerfil/:id',
+        loadChildren: () => import('../pages/loja-perfil/loja-perfil.module').then( m => m.LojaPerfilPageModule)
+      },
       {
         path: 'tab1',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)

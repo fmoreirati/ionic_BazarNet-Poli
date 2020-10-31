@@ -17,9 +17,9 @@
   <!-- AGM -->
   <agm-map [latitude]="lat" [longitude]="lng" [mapTypeId]="mapType" [zoom]="zoom" (mapClick)="onClick($event, infoWindow)">
 
-    <agm-marker [latitude]="loja.lat" [longitude]="loja.lng" [markerDraggable]="true">
+    <agm-marker [latitude]="loja.lat" [longitude]="loja.lng" [markerDraggable]="false">
       <agm-info-window #infoWindow>
-        <strong>{{loja.nome}} </strong>
+        <strong>{{loja.endereco}} </strong>
       </agm-info-window>
     </agm-marker>
 
@@ -28,13 +28,13 @@
   <!-- Lojas -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let loja of lojas; let i = index" (click)="escolherLoja(i)">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{loja.nome}}</ion-card-title>
+      <ion-col size="6" *ngFor="let l of lojas; let i = index" >
+        <ion-card >
+          <ion-card-header routerLink="/tabs/lojaPerfil/{{l.id}}">
+            <ion-card-title>{{l.nome}}</ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            {{loja.endereco}}
+          <ion-card-content (click)="escolherLoja(i)">
+            {{loja.tel}} - Localização
           </ion-card-content>
         </ion-card>
       </ion-col>

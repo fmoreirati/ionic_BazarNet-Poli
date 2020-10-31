@@ -26,10 +26,13 @@ export class LojaService {
         return this.fireDB.collection(this.colletion).add(
           {
             nome: loja.nome,
-            endereco:res.id,
+            endereco: res,
             complemento: loja.complemento,
             numero: loja.numero,
             tel: loja.tel,
+            foto: loja.foto ? loja.foto: null,
+            galeria: loja.galeria ? loja.galeria: null,
+
             ativo: loja.ativo,
 
             lat: loja.lat,
@@ -62,5 +65,11 @@ export class LojaService {
     return this.fireDB.collection(this.colletion).doc(id).delete();
   }
 
+  updatePhoto(id:string,index:number,fotos:string[]){
+    return this.fireDB.collection(this.colletion).doc(id).update({
+      galeria:fotos,
+      foto:index
+    })
+  }
 
 }

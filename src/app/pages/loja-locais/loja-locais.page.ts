@@ -4,6 +4,7 @@ import { MouseEvent } from '@agm/core';
 
 import { Loja } from 'src/app/models/loja';
 import { LojaService } from 'src/app/services/loja.service';
+import { EnderecoService } from 'src/app/services/endereco.service';
 
 @Component({
   selector: 'app-loja-locais',
@@ -29,6 +30,7 @@ export class LojaLocaisPage implements OnInit {
   constructor(
     private geolocation: Geolocation,
     private lojaService: LojaService,
+    private enderecoServico: EnderecoService
   ) { }
 
   ngOnInit() {
@@ -58,11 +60,21 @@ export class LojaLocaisPage implements OnInit {
   }
 
   loadLojas() {
+    let lojasEnderecos = [];
     this.lojaService.getAll().subscribe(
       res => {
         this.lojas = res
       }
     )
+    this.lojas.forEach(loja => {
+      this.enderecoServico.get(loja.endereco).subscribe(
+        res=>{
+          loja.endereco = res
+          lojasEnderecos.push(loja);
+        }
+      )
+    });
+    this.lojas = lojasEnderecos;
   }
 
   escolherLoja(index) {

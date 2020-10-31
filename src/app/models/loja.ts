@@ -5,6 +5,9 @@ export class Loja {
     complemento: string = "";
     numero: string;
     tel: string;
+    foto: number;
+    galeria: string[] = [];
+
     ativo: boolean = true;
 
     endereco: Endereco = new Endereco;

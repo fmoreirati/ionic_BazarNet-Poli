@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Loja } from 'src/app/models/loja';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MessageService } from 'src/app/services/message.service';
 import { LojaService } from 'src/app/services/loja.service';
 import { Router } from '@angular/router';
 import { EnderecoService } from 'src/app/services/endereco.service';
+import { Endereco } from 'src/app/models/endereco';
 
 @Component({
   selector: 'app-loja-form',
@@ -25,9 +26,10 @@ export class LojaFormPage implements OnInit {
     private lojaService: LojaService,
     private enderecoService: EnderecoService,
     private router: Router
-  ) { }
+  ) {
+  //  this.loja.endereco = new Endereco;
+  }
 
- 
 
   ngOnInit() {
     this.getLocal();
@@ -36,7 +38,6 @@ export class LojaFormPage implements OnInit {
   onSubmit(form) {
     this.loja.lat = this.lat;
     this.loja.lng = this.lng;
-    console.log(this.loja);
 
     if (form.valid) {
       this.msg.presentLoading()
@@ -93,31 +94,24 @@ export class LojaFormPage implements OnInit {
   getCEP() {
     this.enderecoService.getEndereco(this.cep).subscribe(
       res => {
-        console.log(res);
-
         if (res.erro) {
           this.msg.presentAlert("Erro", "CEP não localizado");
         } else {
-          this.loja.endereco.cep = res.cep;
-          this.loja.endereco.logradouro = res.logradouro;
-          this.loja.endereco.bairro = res.bairro;
-          this.loja.endereco.localidade = res.localidade;
-          this.loja.endereco.uf = res.uf;
+          this.loja.endereco = res
         }
       },
-      err => {
-        this.msg.presentAlert("Erro", "Não foi possivel localizar o endereço!");
-      }
+        err => {
+          this.msg.presentAlert("Erro", "Não foi possivel localizar o endereço!");
+        }
     )
   }
-  
-  buscaCEP(){
-    this.enderecoService.buscaCEP(this.cep).subscribe(
-      res=>{
-        this.loja.endereco = res[0]
-        console.log(res);
-      }
-    )  
-  }
+
+  // buscaCEP() {
+  //   this.enderecoService.buscaCEP(this.cep).subscribe(
+  //     res => {
+  //       this.loja.endereco = res[0]
+  //     }
+  //   )
+  // }
 
 }
