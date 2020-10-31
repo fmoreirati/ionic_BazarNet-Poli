@@ -9,7 +9,8 @@ export class Loja {
     galeria: string[] = [];
 
     ativo: boolean = true;
-
+    
+    enderecoPrincipal:string;
     endereco: Endereco = new Endereco;
 
     lat: number;

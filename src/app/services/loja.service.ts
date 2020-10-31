@@ -21,30 +21,36 @@ export class LojaService {
   ) { }
 
   add(loja: Loja) {
-    return this.enderecoService.add(loja.endereco).then(
+    return this.fireDB.collection(this.colletion).add(
+      {
+        nome: loja.nome,
+        complemento: loja.complemento,
+        numero: loja.numero,
+        tel: loja.tel,
+
+        foto: loja.foto ? loja.foto : null,
+        galeria: loja.galeria ? loja.galeria : null,
+
+        ativo: loja.ativo,
+
+        enderecoPrincipal: null,//Seleciona o endereco principal da colection Endereco na loja. Isso será selecionado posteriormente.
+        endereco: <Endereco>loja.endereco, //Grava o objeto no item no formarto Json;
+
+        lat: loja.lat,
+        lng: loja.lng
+      }
+    ).then(
       res => {
-        return this.fireDB.collection(this.colletion).add(
-          {
-            nome: loja.nome,
-            endereco: res,
-            complemento: loja.complemento,
-            numero: loja.numero,
-            tel: loja.tel,
-            foto: loja.foto ? loja.foto: null,
-            galeria: loja.galeria ? loja.galeria: null,
-
-            ativo: loja.ativo,
-
-            lat: loja.lat,
-            lng: loja.lng
+        this.fireDB.collection(this.colletion).doc(res.id).collection("enderecos").add(<Endereco>loja.endereco).then(
+          res => {
+            loja.enderecoPrincipal = res.id;//Só atribui mas não atualizei o banco de dados;
           }
-        )
+        );
       }
     )
-
   }
 
-  getAll() { 
+  getAll() {
     return this.fireDB.collection<Loja>(this.colletion).snapshotChanges()
       .pipe(
         map(
@@ -54,8 +60,9 @@ export class LojaService {
   }
 
   get(id: string) {
-    return this.fireDB.collection(this.colletion).doc<Loja>(id).valueChanges();
+    return this.fireDB.collection(this.colletion).doc<Loja>(id).valueChanges()
   }
+
 
   update(loja: Loja, id: string) {
     return this.fireDB.collection(this.colletion).doc(id).update(loja);
@@ -65,10 +72,10 @@ export class LojaService {
     return this.fireDB.collection(this.colletion).doc(id).delete();
   }
 
-  updatePhoto(id:string,index:number,fotos:string[]){
+  updatePhoto(id: string, index: number, fotos: string[]) {
     return this.fireDB.collection(this.colletion).doc(id).update({
-      galeria:fotos,
-      foto:index
+      galeria: fotos,
+      foto: index
     })
   }
 

@@ -66,15 +66,6 @@ export class LojaLocaisPage implements OnInit {
         this.lojas = res
       }
     )
-    this.lojas.forEach(loja => {
-      this.enderecoServico.get(loja.endereco).subscribe(
-        res=>{
-          loja.endereco = res
-          lojasEnderecos.push(loja);
-        }
-      )
-    });
-    this.lojas = lojasEnderecos;
   }
 
   escolherLoja(index) {

@@ -31,8 +31,16 @@
     </ion-item>
     <ion-item>
       <ion-label>Endereco</ion-label>
-      <ion-text>{{loja.endereco}}</ion-text>
+      <ion-text>{{loja.endereco.logradouro}}, {{loja.numero}} {{loja.complemento}}, {{loja.endereco.localidade}}</ion-text>
     </ion-item>
 
   </ion-list>
+  
+<ion-item>
+  <ion-text>
+    <h3 color="primary">Endereço Completo</h3>
+    <p color="secondary">{{loja.endereco | json}}</p>
+  </ion-text>
+</ion-item>
+
 </ion-content>

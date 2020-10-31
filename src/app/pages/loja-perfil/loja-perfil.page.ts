@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { mapTo } from 'rxjs/operators';
+import { Endereco } from 'src/app/models/endereco';
 import { Loja } from 'src/app/models/loja';
 import { LojaService } from 'src/app/services/loja.service';
 import { MessageService } from 'src/app/services/message.service';
@@ -43,6 +45,7 @@ export class LojaPerfilPage implements OnInit {
     if (this.id) {
       this.lojaService.get(this.id).subscribe(
         res => {
+          console.log(res);
           this.loja = res;
           this.preview = this.loja.galeria[this.loja.foto];
         }
@@ -163,9 +166,9 @@ export class LojaPerfilPage implements OnInit {
         handler: () => {
           this.loja.foto = index <= this.loja.foto ? this.loja.foto - 1 : this.loja.foto;
           this.preview = this.loja.galeria[this.loja.foto];
-      
+
           this.loja.galeria.splice(index, 1)
-      
+
           this.msg.presentLoading();
           this.lojaService.updatePhoto(this.id, this.loja.foto, this.loja.galeria).then(
             res => {

@@ -22,13 +22,15 @@ export class EnderecoService {
   }
 
   add(endereco: Endereco) {
-    return this.fireDB.collection(this.colletion).add(
+    return this.fireDB.collection<Endereco>(this.colletion).add(
       {
+        id: null,
         cep: endereco.cep,
         logradouro: endereco.logradouro,
         bairro: endereco.bairro,
         localidade: endereco.localidade,
-        uf: endereco.uf
+        uf: endereco.uf,
+        erro:endereco.erro
       }
     )
   }
