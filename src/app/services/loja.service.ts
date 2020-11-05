@@ -56,13 +56,25 @@ export class LojaService {
         map(
           dados => dados.map(d => ({ id: d.payload.doc.id, ...d.payload.doc.data() }))
         )
-      )
+      );
+  }
+
+  getAllEnderecos(key:string) {
+    return this.fireDB.collection(this.colletion).doc(key).collection<Endereco>("enderecos").snapshotChanges()
+      .pipe(
+        map(
+          dados => dados.map(d => ({ id: d.payload.doc.id, ...d.payload.doc.data() }))
+        )
+      );
   }
 
   get(id: string) {
-    return this.fireDB.collection(this.colletion).doc<Loja>(id).valueChanges()
+    return this.fireDB.collection(this.colletion).doc<Loja>(id).valueChanges();
   }
 
+  getEndereco(lojaid: string, Enderecoid:string) {
+    return this.fireDB.collection(this.colletion).doc(lojaid).collection("endereco").doc(Enderecoid).valueChanges();
+  }
 
   update(loja: Loja, id: string) {
     return this.fireDB.collection(this.colletion).doc(id).update(loja);

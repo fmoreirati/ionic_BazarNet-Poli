@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
   {
     path: 'tabs',
     component: TabsPage,
+   
     children: [
       {
         path: 'lojasLocais',
@@ -25,7 +29,9 @@ const routes: Routes = [
       },
       {
         path: 'usuarioList',
-        loadChildren: () => import('../pages/usuario-list/usuario-list.module').then(m => m.UsuarioListPageModule)
+        loadChildren: () => import('../pages/usuario-list/usuario-list.module').then(m => m.UsuarioListPageModule),
+        canActivate: [AngularFireAuthGuard], 
+        data: { authGuardPipe: redirectUnauthorizedToLogin },
       },
       {
         path: 'usuarioForm',

@@ -8,12 +8,15 @@ import { UsuarioFormPageRoutingModule } from './usuario-form-routing.module';
 
 import { UsuarioFormPage } from './usuario-form.page';
 
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UsuarioFormPageRoutingModule
+    UsuarioFormPageRoutingModule,
+    AngularFireStorageModule
   ],
   declarations: [UsuarioFormPage]
 })
